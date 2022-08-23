@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+
+    <bean id="logAop" class="org.example.spring_test_01.aopEx.LogAop" />
+
+    <aop:config>
+        <!-- aspect id는 logger이고 logAop를 참조함 -->
+        <aop:aspect id="logger" ref="logAop">
+            <aop:pointcut id="publicM" expression="within(org.example.spring_test_01.aopEx.*)"/>
+            <!--loggerAop()라는 공통 기능을 publicM 이라는 pointcut에 적용-->
+            <aop:around pointcut-ref="publicM" method="loggerAop"/>
+        </aop:aspect>
+    </aop:config>
+
+    <bean id="myDog" class="org.example.spring_test_01.aopEx.Dogs">
+        <property name="breed" value="토이폭스테리어"/>
+        <property name="age" value="3"/>
+        <property name="color" value="black-white"/>
+    </bean>
+
+</beans>
